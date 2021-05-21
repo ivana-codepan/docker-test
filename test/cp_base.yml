@@ -1,0 +1,26 @@
+name: cp_base
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - black
+  - isort
+  - ipykernel
+  - ipywidgets[--no-deps]
+  - jupyterlab
+  - notebook
+  - nodejs
+  - numpy
+  - pandas
+  - pip
+  - seaborn
+  - scikit-learn
+  - tpot
+  - tqdm
+  - pip:
+    - black
+    - jupyterlab-code-formatter
+    - jupyterlab-git
+
+prefix: /Users/i.penc/miniconda3/envs/cp_base
+

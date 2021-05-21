@@ -1,0 +1,20 @@
+services:
+  jlab:
+    build:
+      context: .
+      dockerfile: DOCKERFILE
+    environment:
+      - PROD_ENV=false
+    container_name: cp-base
+    ports:
+      - "127.0.0.1:8888:8888"
+    volumes:
+      - ..:/workspace
+      - ../../.aws:/root/.aws/
+      - ../../.gitconfig:/root/.gitconfig
+      - ../../.config/gcloud:/root/.config/gcloud/
+      - ../../.config/redshift:/root/.config/redshift/
+      - ../../.ssh:/root/.ssh/
+    stdin_open: true
+    tty: true
+    command: bash -ic 'conda activate cp_base && jupyter lab --port=8888 --no-browser --notebook-dir=/workspace/ --allow-root --ip=0.0.0.0'

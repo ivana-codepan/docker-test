@@ -1,0 +1,65 @@
+FROM continuumio/miniconda3:latest
+
+LABEL description="Base Image"
+
+SHELL ["/bin/bash", "-c"]
+
+WORKDIR /
+
+RUN apt-get update && \
+    apt-get install -y gcc g++ curl && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN conda config --set always_yes yes --set changeps1 no && \
+    conda config --add channels conda-forge && \
+    conda update -q conda && \
+    conda info -a
+
+
+
+RUN mkdir -p workspace
+COPY . /workspace
+VOLUME /workspace 
+WORKDIR /workspace
+
+RUN conda env create -f cp_base.yml || conda env update -f cp_base.yml && \
+    conda clean -a
+
+RUN source /opt/conda/etc/profile.d/conda.sh && \
+    conda activate cp_base 
+    #&& \
+    #python -m pip install --no-cache-dir . 
+
+RUN source /opt/conda/etc/profile.d/conda.sh && \
+    conda activate cp_base && \
+    jupyter labextension install \
+    @jupyterlab/toc \
+    @krassowski/jupyterlab_go_to_definition \
+    @jupyter-widgets/jupyterlab-manager \
+    conda install jupyterlab_code_formatter && \
+    jupyter labextension install 
+
+RUN source /opt/conda/etc/profile.d/conda.sh && \
+    conda activate cp_base && \
+    jupyter serverextension enable --py \
+    jupyterlab_code_formatter \
+    --sys-prefix
+
+RUN source /opt/conda/etc/profile.d/conda.sh && \
+    conda activate cp_base && \
+    jupyter notebook --generate-config
+    
+RUN source /opt/conda/etc/profile.d/conda.sh && \
+    conda config --set always_yes no --set changeps1 yes
+
+
+RUN echo "conda activate cp_base" >> /root/.bashrc
+RUN echo "alias ipython='ipython --pylab'" >> /root/.bashrc
+
+COPY entrypoint.sh /entrypoint.sh
+
+
+EXPOSE 8888
+ENTRYPOINT ["/entrypoint.sh"]
+
+

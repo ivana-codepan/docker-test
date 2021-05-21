@@ -1,0 +1,42 @@
+FROM continuumio/miniconda3:latest
+
+LABEL description="Base Image"
+
+SHELL ["/bin/bash", "-c"]
+
+RUN apt-get update && \
+    apt-get install -y gcc g++ curl && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN conda config --set always_yes yes --set changeps1 no && \
+    conda config --add channels conda-forge && \
+    conda update -q conda && \
+    conda info -a
+
+
+RUN mkdir -p test
+VOLUME /Users/i.penc/workspace/test 
+WORKDIR /Users/i.penc/workspace/test
+
+RUN conda env create -f cp_base.yml || conda env update -f cp_base.yml && \
+    conda clean -a
+
+RUN source /opt/conda/etc/profile.d/conda.sh && \
+    conda activate cp_base 
+    #&& \
+    #python -m pip install --no-cache-dir . 
+
+RUN source /opt/conda/etc/profile.d/conda.sh && \
+    conda activate cp_base && \
+    jupyter notebook --generate-config && \
+    echo "c.InteractiveShellApp.matplotlib = 'inline'" >> /root/.ipython/profile_default/ipython_config.py
+
+
+RUN echo "conda activate cp_base" >> /root/.bashrc
+RUN chsh -s /bin/bash
+
+ENV SHELL "bash"
+
+EXPOSE 8888
+
+

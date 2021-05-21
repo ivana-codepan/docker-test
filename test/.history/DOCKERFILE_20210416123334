@@ -1,0 +1,31 @@
+FROM continuumio/miniconda3:latest
+
+LABEL description="Base Image"
+
+SHELL ["/bin/bash", "-c"]
+
+RUN apt-get update && \
+    apt-get install -y gcc g++ curl && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN conda config --set always_yes yes --set changeps1 no && \
+    conda config --add channels conda-forge && \
+    conda update -q conda && \
+    conda info -a
+
+RUN mkdir -p test
+COPY . /test 
+WORKDIR /test
+
+RUN conda env create -f base.yml || conda env update -f base.yml && \
+    conda clean -a
+
+RUN source /opt/conda/etc/profile.d/conda.sh && \
+    conda activate base && \
+    python -m pip install --no-cache-dir . 
+
+RUN echo "conda activate base" >> /root/.bashrc
+RUN chsh -s /bin/bash
+
+ENV SHELL "bash"
+

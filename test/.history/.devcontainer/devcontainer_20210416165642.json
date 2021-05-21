@@ -1,0 +1,81 @@
+// File used by VSCode for remote development.
+// See https://aka.ms/vscode-remote/containers for the
+// documentation about the devcontainer.json format
+{
+	"dockerComposeFile": "../docker-compose.yml",
+	"service": "jlab",
+	"workspaceFolder": "/workspace/test/",
+	"extensions": [
+		"ms-python.python",
+		"coenraads.bracket-pair-colorizer",
+		"lacroixdavid1.vscode-format-context-menu",
+		"codezombiech.gitignore",
+		"michelemelluso.gitignore",
+		"eamodio.gitlens",
+		"oderwat.indent-rainbow",
+		"eriklynd.json-tools",
+		"christian-kohler.path-intellisense",
+		"mechatroner.rainbow-csv",
+		"lextudio.restructuredtext",
+		"timonwong.shellcheck",
+		"visualstudioexptteam.vscodeintellicode"
+	],
+	"settings": {
+		"workbench.colorCustomizations": {
+			"statusBar.background": "#0DB7ED",
+			"statusBar.foreground": "#384d54"
+		},
+		"python.pythonPath": "/opt/conda/envs/cp_base/bin/python",
+		"python.condaPath": "/opt/conda/envs/cp_base/bin/conda",
+		"python.workspaceSymbols.ctagsPath": "/usr/bin/ctags",
+		"python.workspaceSymbols.exclusionPatterns": [
+			"**/site-packages/**",
+			"**/.history/**"
+		],
+		"python.autoComplete.showAdvancedMembers": true,
+		"python.jediEnabled": false,
+		"python.sortImports.path": "/opt/conda/envs/cp_base/bin/isort",
+		"python.formatting.provider": "black",
+		"python.formatting.blackPath": "/opt/conda/envs/cp_base/bin/black",
+		"python.formatting.blackArgs": [
+			"--line-length",
+			"79"
+		],
+		"python.linting.enabled": true,
+		"python.linting.lintOnSave": true,
+		"python.linting.pycodestyleEnabled": true,
+		"python.linting.pydocstyleEnabled": true,
+		"python.linting.pylintEnabled": true,
+		"python.linting.pycodestylePath": "/opt/conda/envs/cp_base/bin/pycodestyle",
+		"python.linting.pydocstylePath": "/opt/conda/envs/cp_base/bin/pydocstyle",
+		"python.linting.pylintPath": "/opt/conda/envs/cp_base/bin/pylint",
+		"python.linting.ignorePatterns": [
+			".vscode/*.py",
+			"**/site-packages/**/*.py",
+			".history/*.py",
+			"**/.history/*.py",
+			"**/envs/**/*.py"
+		],
+		"python.linting.pydocstyleArgs": [
+			"convention=numpy"
+		],
+		"python.linting.pylintArgs": [
+			"--extension-pkg-whitelist=numpy",
+			"--load-plugins=pylint.extensions.docparams"
+		],
+		"python.testing.pyTestEnabled": true,
+		"python.testing.pyTestPath": "/opt/conda/envs/cp_base/bin/pytest",
+		"python.testing.pyTestArgs": [
+			"-s",
+			"--ignore=deprecated"
+		],
+		"[python]": {
+			"editor.codeActionsOnSave": {
+				"source.organizeImports": true
+			}
+		},
+		"editor.formatOnSave": true,
+		"editor.formatOnType": false,
+		"editor.formatOnPaste": false
+	}
+}

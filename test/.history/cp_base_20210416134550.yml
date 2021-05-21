@@ -1,0 +1,18 @@
+name: cp_base
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - ipykernel
+  - ipywidgets[--no-deps]
+  - notebook
+  - numpy
+  - pandas
+  - pip
+  - seaborn
+  - scikit-learn
+  - tpot
+  - tqdm
+
+prefix: /Users/i.penc/miniconda3/envs/cp_base
+

@@ -1,0 +1,9 @@
+name: cp_base
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - astropy
+  - xlrd
+prefix: /Users/i.penc/miniconda3/envs/cp_base
+
